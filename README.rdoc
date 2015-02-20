@@ -1,4 +1,4 @@
-This is a project I made for my school, using the moviedb API to gather nformations on films, display the last movies, search for films and create to see and seen lists.
+This is a project I made for my school, using the moviedb API to gather information on films, display the last movies, search for films and create lists : to see and seen.
 
 * Ruby version 2.0.0
 * Rails version 4.1.8
