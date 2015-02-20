@@ -1,0 +1,51 @@
+<center>
+  <div class="search">
+    <h1>Search for a movie</h1>
+    <%= form_tag("/search", :method => "get") do %>
+      <%= text_field_tag(:query, nil, :class => "input-xlarge searchInput") %>
+    <% end %>
+  </div>
+</center>
+
+<h1>Last Films</h1>
+
+
+<% @movies.each_with_index do |movie,index| %>
+<div class="movies">
+  <% if movie %>
+
+    <%= link_to movie_path(movie.movie_id) do %>
+    <div class="affiche">
+      
+      <h1><%= movie.title %></h1>
+
+      <div class="datBtn" role="group" aria-label="...">
+        <% if UserMovie.where("to_see = 1 AND user_id = ? AND movie_id = ?", current_user.id, movie.movie_id).size == 0 %>
+          <%= link_to users_movies_path(:movie_id => movie.movie_id, :todo => 'to_see' ) do %>
+            <button type="button" class="btn btn-default">To see</button>
+          <% end %>
+        <% end %>
+        <% if UserMovie.where("seen = 1 AND user_id = ? AND movie_id = ?", current_user.id, movie.movie_id).size == 0 %>
+          <%= link_to users_movies_path(:movie_id => movie.movie_id, :todo => 'seen' ) do %>
+            <button type="button" class="btn btn-default">Seen</button>
+          <% end %>
+        <% end %>
+      </div>
+
+    </div>
+    <div class="video">
+      <% if movie.trailer != nil %>
+        <iframe height="319px" src="//www.youtube.com/embed/<%= movie.trailer %>" frameborder="0" allowfullscreen></iframe>
+      <% else %>
+        <%= image_tag "Doge.jpg" %>
+      <% end %>
+    </div>
+    <% end %>
+
+
+
+  <% end %>
+  <div class="clear"></div>
+</div>
+
+<% end %>

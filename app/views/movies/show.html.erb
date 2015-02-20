@@ -1,0 +1,53 @@
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span2">
+
+      <% @movie.each do |movie| %>
+
+        <h3>Poster</h3>
+        <%= image_tag("#{@configuration.base_url}w154#{movie.poster}") if movie.poster %>
+
+          <div class="datBtn btnInline" role="group" aria-label="...">
+            <% if UserMovie.where("to_see = 1 AND user_id = ? AND movie_id = ?", current_user.id, movie.movie_id).size == 0 %>
+              <%= link_to users_movies_path(:movie_id => movie.movie_id, :todo => 'to_see' ) do %>
+                <button type="button" class="btn btn-default">To see</button>
+              <% end %>
+            <% end %>
+            <% if UserMovie.where("seen = 1 AND user_id = ? AND movie_id = ?", current_user.id, movie.movie_id).size == 0 %>
+              <%= link_to users_movies_path(:movie_id => movie.movie_id, :todo => 'seen' ) do %>
+                <button type="button" class="btn btn-default">Seen</button>
+              <% end %>
+            <% end %>
+          </div>
+
+        <h3>Facts</h3>
+        Release Date: <br />
+        <%= movie.release_date.to_date.strftime("%d/%m/%Y") if movie.release_date %><br />
+
+        <div class="video">
+          <% if movie.trailer != nil %>
+            <iframe height="319px" src="//www.youtube.com/embed/<%= movie.trailer %>" frameborder="0" allowfullscreen></iframe>
+          <% else %>
+            <%= image_tag "Doge.jpg" %>
+          <% end %>
+        </div>
+
+        </div>
+        <div class="span10">
+          <h2><%= movie.title %></h2>
+
+    			<h3>Overview</h3>
+    			<%= movie.description %>
+
+    			<h3>Genres</h3>
+          <% if movie.genre != nil %>
+    			  <%= movie.genre %>
+          <% else %>
+            <p>Couldn't retrieve genre datas</p>
+          <% end %>
+    			
+        </div>
+
+      <% end %>
+  </div>
+</div>

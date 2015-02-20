@@ -1,0 +1,48 @@
+<div class="container-fluid">
+<div>
+	<h1> To see </h1>
+	<% if @movies_to_see.size != 0 %>
+
+		<% @movies_to_see.each do |movie| %>
+			<% movie.each do |movie| %>
+			  <%= link_to movie_path(movie.movie_id) do %>
+				  <div class="list">
+				    <%= image_tag("#{@configuration.base_url}w154#{movie.poster}") if movie.poster %>
+				    <p><%= movie.title %></p>
+				  </div>
+			  <% end %>
+			<% end %>
+		<% end %>
+
+	<% else %>
+		<p>No movie to see..</p>
+	<% end %>
+
+
+</div>
+
+<div class="clear"></div>
+
+<div>
+	<h1> Seen </h1>
+
+	<% if @movies_seen.size != 0 %>
+
+		<% @movies_seen.each do |movie| %>
+			<% movie.each do |movie| %>
+			  <%= link_to movie_path(movie.movie_id) do %>
+				  <div class="list">
+				    <%= image_tag("#{@configuration.base_url}w154#{movie.poster}") if movie.poster %>
+				    <p><%= movie.title %></p>
+				  </div>
+			  <% end %>
+			<% end %>
+		<% end %>
+
+	<% else %>
+		<p>No movie seen..</p>
+	<% end %>
+
+</div>
+
+</div>

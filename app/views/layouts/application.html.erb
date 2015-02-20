@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+  <!-- Meta tags that set up the page as a mobile page   -->
+  <meta name = "viewport" content = "user-scalable=no, initial-scale=1.0, maximum-scale=1.0, width=device-width">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <link rel="apple-touch-icon" href="/m/images/iphone.png" />
+  <meta name="format-detection" content="telephone=no" />
+  <!--  A free Google web font embed because android does not have the browser safe fonts -->
+  <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Allerta">
+  <title>ProjectMovies</title>
+  <link rel="stylesheet" href="http://railsgirls.com/assets/bootstrap.css">
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+<div class="header navbar">
+    <div class="navbar-inner">
+        <div class="container">
+        <% if user_signed_in? %>
+          <ul class="nav nav-pills pull-left">
+            <li role="presentation"><a href="/home">Movies</a></li>
+            <li role="presentation"><%= link_to list_path do %>List<% end %></li>
+          </ul>
+
+          <p class="logged navbar-text pull-right">
+      			  Logged in as <strong><%= current_user.email %></strong>.
+      			  <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> |
+      			  <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
+      	<% else %>
+      			  <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %> |
+      			  <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
+      	<% end %>
+          </p>
+			
+        </div>
+    </div>
+</div>
+
+<% if notice %>
+  <p class="alert alert-success"><%= notice %></p>
+<% end %>
+<% if alert %>
+  <p class="alert alert-danger"><%= alert %></p>
+<% end %>
+
+<div class="container">
+    <%= yield %>
+</div>
+
+<footer>
+    <div class="container">
+        Hetic 2015
+    </div>
+</footer>
+
+</body>
+</html>
